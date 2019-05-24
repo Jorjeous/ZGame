@@ -99,12 +99,10 @@ void runServer(unsigned short serverPort){
     unsigned short portBulletDelta = 5;
     sf::Packet packet1;
     sf::Packet packet2;
-    sf::Packet packet12;
-    sf::Packet packet22;
+
     SendPlayer P1; //Used to send and receive players info
     SendPlayer P2; //Used to send and receive players info
-    SendBullet B1; //Used to send and receive Bullets info
-    SendBullet B2; //Used to send and receive Bullets info
+
     sf::Thread catchBulletThread(&CatchBullet, (serverPort + portBulletDelta));
 
     if (socket.bind(serverPort) != sf::Socket::Done)
@@ -146,26 +144,11 @@ while(1)
     //packet1 >> B1;
     socket.receive(packet2, ipClient2, portClient2);
     packet2 >> P2;
-    //packet2 >> B2;
-
-
-    //std::cout << std::endl <<"InfoRec B1__" << B1.ShootFired << std::endl;
-    //std::cout <<"InfoRec B2__" << B2.ShootFired << std::endl << std::endl;
-
-    //packet1 << P1;
-    //packet2 << P2;
 
     socket.send(packet2, ipClient1, portClient1);
     socket.send(packet1, ipClient2, portClient2);
     packet1.clear();
     packet2.clear();
-
-    if(i > 100000)
-    {
-        break;
-    } else
-    i++;
-
 
 
 
